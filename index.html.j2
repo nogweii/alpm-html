@@ -1,0 +1,52 @@
+<!doctype html>
+<html><head>
+    <title>{{ repo_name }} repository overview</title>
+    <link rel="stylesheet" type="text/css" href="archrepo.css" />
+</head><body>
+    <div class="box">
+      <p>{{ repo_desc }}</p>
+      <pre>[{{ repo_name }}]
+Server = {{ url }}</pre>
+    </div>
+    <!---
+
+==== {{ repo_name }} ====
+
+* '''Maintainer:''' [http://example.com/ Who you are]
+* '''Description:''' {{ repo_desc }}
+* '''Upstream page:''' {{ url }}
+* '''Key-ID:''' {{ key_id }}
+
+{% raw %}{{bc|<nowiki>{% endraw %}
+[{{ repo_name }}]
+Server = {{ url }}
+{% raw %}</nowiki>}}{% endraw %}
+
+    --->
+
+    <div class="box">
+      <p>{{ packages|length }} packages in this repository.</p>
+      <table class="results">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Arch</th>
+                  <th>Version</th>
+                  <th>Description</th>
+                  <th>Build Date</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for pkg in packages %}
+              <tr>
+                  <td><a href="{{ pkg.html_path }}">{{ pkg.name }}</a></td>
+                  <td>{{ pkg.architecture }}</td>
+                  <td>{{ pkg.version }}</td>
+                  <td class="wrap">{{ pkg.description }}</td>
+                  <td>{{ pkg.build_date }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</body></html>

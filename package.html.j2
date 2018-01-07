@@ -1,0 +1,118 @@
+<!doctype html>
+<html><head>
+    <title>{{ repo_name }} repo - {{ pkg.name }} details</title>
+    <link rel="stylesheet" type="text/css" href="archrepo.css" />
+</head><body>
+
+<div id="pkgdetails" class="box">
+    <h2>{{ pkg.name }} {{ pkg.version }}</h2>
+
+    <div itemscope itemtype="http://schema.org/SoftwareApplication">
+    <meta itemprop="name" content="{{ pkg.name }}"/>
+    <meta itemprop="version" content="{{ pkg.version }}"/>
+    <meta itemprop="softwareVersion" content="{{ pkg.version }}"/>
+    <meta itemprop="fileSize" content="{{ pkg.compressed_size }}"/>
+    <meta itemprop="dateCreated" content="{{ pkg.build_date }}"/>
+    <meta itemprop="operatingSystem" content="Arch Linux"/>
+    {% if pkg.packager %}<div style="display:none" itemprop="provider" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="{{ pkg.packager }}"/>
+    </div>{% endif %}
+    <table id="pkginfo">
+        <tr>
+            <th>Architecture:</th>
+            <td>{{pkg.architecture}}</td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td class="wrap" itemprop="description">{{ pkg.description|default("") }}</td>
+        </tr><tr>
+            <th>Upstream URL:</th>
+            <td>{% if pkg.url %}<a itemprop="url" href="{{ pkg.url }}"
+                    title="Visit the website for {{ pkg.name }}">{{ pkg.url }}</a>{% endif %}</td>
+        </tr><tr>
+            <th>License(s):</th>
+            <td class="wrap">{{ pkg.licenses|join(", ") }}</td>
+        </tr>
+        {% if pkg.groups|length > 0 %}
+        <tr>
+            <th>Groups:</th>
+            <td class="wrap">{{ pkg.groups|join(", ") }}</td>
+            </td>
+        </tr>
+        {% endif %}
+        {% if pkg.provides|length > 0 %}
+        <tr>
+            <th>Provides:</th>
+            <td class="wrap relatedto">{{ pkg.provides }}</td>
+        </tr>
+        {% endif %}
+        {% with all_related=pkg.replaces.all %}{% if all_related %}
+        <tr>
+            <th>Replaces:</th>
+            <td class="wrap relatedto">{% include "packages/details_relatedto.html" %}</td>
+        </tr>
+        {% endif %}{% endwith %}
+        {% with all_related=pkg.conflicts.all %}{% if all_related %}
+        <tr>
+            <th>Conflicts:</th>
+            <td class="wrap relatedto">{% include "packages/details_relatedto.html" %}</td>
+        </tr>
+        {% endif %}{% endwith %}
+        <tr>
+            <th>Maintainers:</th>
+            {% with maints=pkg.maintainers %}
+            <td>{% if maints %}{% for m in maints %}
+                <a href="/packages/?maintainer={{ m.username }}"
+                    title="View packages maintained by {{ m.get_full_name }}">{{ m.get_full_name }}</a><br/>
+                {% endfor %}{% else %}Orphan{% endif %}
+            </td>
+            {% endwith %}
+        </tr><tr>
+            <th>Package Size:</th>
+            <td>{{ pkg.compressed_size|filesizeformat }}</td>
+        </tr><tr>
+            <th>Installed Size:</th>
+            <td>{{ pkg.installed_size|filesizeformat }}</td>
+        </tr><tr>
+            <th>Last Packager:</th>
+            <td>{% with pkgr=pkg.packager %}{% if pkgr %}
+            <a href="/packages/?packager={{ pkgr.username }}"
+                title="View packages packaged by {{ pkgr.get_full_name }}">{{ pkgr.get_full_name }}</a>
+            {% else %}{{ pkg.packager_str }}{% endif %}{% endwith %}</td>
+        </tr><tr>
+            <th>Build Date:</th>
+            <td>{{ pkg.build_date }} UTC</td>
+        </tr>
+    </table>
+    </div>
+
+    <div id="metadata">
+        <div id="pkgdeps" class="listing">
+            <h3 title="{{ pkg.name }} has the following dependencies">
+                Dependencies ({{pkg.depends|length}})</h3>
+            {% if pkg.depends|length > 0 %}<ul id="pkgdepslist">
+                {% for depend in pkg.depends %}<li>{{ depend }}</li>{% endfor %}
+            </ul>{% endif %}
+        </div>
+        {% if pkg.optdepends|length > 0 %}
+        <div id="pkgoptdeps" class="listing">
+            <h3 title="{{ pkg.name }} has the following optional dependencies">
+                Optional Dependencies ({{pkg.optdepends|length}})</h3>
+            <ul id="pkgdepslist">
+                {% for depend in pkg.optdepends %}<li>{{ depend.name }} - <i>{{ depend.description }}</i></li>{% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div id="pkgfiles" class="listing">
+            <h3 title="Complete list of files contained within this package">
+                Package Contents</h3>
+            <div id="pkgfilelist">
+                <p class='counts'>Package has {{ pkg.files.file_count }} files and {{ pkg.files.dir_count }} directories.</p>
+                <ul id="pkgdepslist">
+                {% for file in pkg.files.files %}<li class="{% if file.name.endswith('/') %}d{% else %}f{% endif %}">{{ file.name }} {%if file.bytes > 0 %}<span class='filesize'>({{file.bytes|filesizeformat}})</span>{% endif %}</li>{% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body></html>

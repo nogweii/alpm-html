@@ -1,0 +1,141 @@
+body {
+    color: #222;
+    font-family: sans-serif;
+    border-top: 5px #08c solid !important;
+}
+.box {
+  padding: 0.65em;
+  background: #ecf2f5;
+  border: 1px solid #bcd;
+  margin-bottom: 2em;
+}
+
+a { color: #07b; text-decoration: none; }
+
+pre {
+    background-color: #dfd;
+    font-family: monospace;
+    border: 1px solid #bdb;
+    overflow: auto;
+    word-break: break-all;
+    white-space: pre-wrap !important;
+    padding: 0.5em;
+    margin: 1em;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    table .wrap {
+        white-space: normal;
+    }
+
+th,
+td {
+    white-space: nowrap;
+    text-align: left;
+}
+
+    th {
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    td {
+        vertical-align: top;
+    }
+
+table.results {
+    font-size: 0.846em;
+    border-top: 1px dotted #999;
+    border-bottom: 1px dotted #999;
+
+    width: 100%;
+}
+
+    .results th {
+        padding: 0.5em 1em 0.25em 0.25em;
+        border-bottom: 1px solid #999;
+        white-space: nowrap;
+        background-color:#fff;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    .results td {
+        padding: .3em 1em .3em 3px;
+    }
+
+    .results tr.odd {
+        background: #fff;
+    }
+
+    .results tr.even {
+        background: #e4eeff;
+    }
+
+    .results .flagged {
+        color: red;
+    }
+
+    .results tr.empty td {
+        text-align: center;
+    }
+
+#metadata {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+    grid-auto-rows: min-content;
+    grid-template-areas: 
+      "a b"
+      "c b";
+    align-items: start;
+}
+
+#metadata h3 {
+    background: #555;
+    color: #fff;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    padding: 0.2em 0.35em;
+}
+
+#metadata ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#metadata li {
+    padding-left: 0.5em;
+}
+
+#metadata p {
+    padding-left: 0.5em;
+}
+
+#pkgdeps {
+    grid-area: a;
+}
+#pkgoptdeps {
+    grid-area: c;
+}
+#pkgfiles {
+    grid-area: b;
+}
+
+#pkgfilelist li.d {
+    color: #666;
+}
+
+#pkgfilelist li.f {
+}
+
+#pkgdepslist .filesize {
+    font-size: small;
+}
