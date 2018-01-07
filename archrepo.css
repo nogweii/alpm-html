@@ -56,6 +56,12 @@ table.results {
     width: 100%;
 }
 
+    table.results tbody tr:nth-child(odd) {
+        background-color: #e4eeff;
+    }
+    table.results tbody tr:nth-child(even) {
+        background-color: #fff;
+    }
     .results th {
         padding: 0.5em 1em 0.25em 0.25em;
         border-bottom: 1px solid #999;
