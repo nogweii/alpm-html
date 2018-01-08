@@ -16,9 +16,13 @@ handle = None
 def optdepends_parse(dlist):
   arr = []
   for depend in dlist:
-    name, description = depend.split(':')
-    arr.append({'name': name,
-                'description': description.strip()})
+    splits = depend.split(':')
+    if len(splits) > 1:
+      desc = splits[1]
+    else:
+      desc = ""
+    arr.append({'name': splits[0],
+                'description': desc.strip()})
   return arr
 
 def file_data(dlist):
