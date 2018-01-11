@@ -76,7 +76,8 @@ def pkg_to_dict(package, absolute_path):
           'backup': package.backup,
           'scriptlet': package.has_scriptlet,
           'absolute_path': absolute_path,
-          'html_path': final_name(os.path.basename(absolute_path))}
+          'html_path': final_name(os.path.basename(absolute_path)),
+          'filename': os.path.basename(absolute_path)}
 
 def process_package(absolute_path):
   global handle

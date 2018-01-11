@@ -5,7 +5,7 @@
 </head><body>
 
 <div id="pkgdetails" class="box">
-    <h2>{{ pkg.name }} {{ pkg.version }}</h2>
+    <h2><a href="{{ pkg.filename }}">{{ pkg.name }}</a> {{ pkg.version }}</h2>
 
     <div itemscope itemtype="http://schema.org/SoftwareApplication">
     <meta itemprop="name" content="{{ pkg.name }}"/>
@@ -43,7 +43,7 @@
         {% if pkg.provides|length > 0 %}
         <tr>
             <th>Provides:</th>
-            <td class="wrap relatedto">{{ pkg.provides }}</td>
+            <td class="wrap relatedto">{{ pkg.provides|join(", ") }}</td>
         </tr>
         {% endif %}
         {% with all_related=pkg.replaces.all %}{% if all_related %}
