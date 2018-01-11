@@ -43,42 +43,27 @@
         {% if pkg.provides|length > 0 %}
         <tr>
             <th>Provides:</th>
-            <td class="wrap relatedto">{{ pkg.provides|join(", ") }}</td>
+            <td class="wrap">{{ pkg.provides|join(", ") }}</td>
         </tr>
         {% endif %}
-        {% with all_related=pkg.replaces.all %}{% if all_related %}
+        {% if pkg.replaces|length > 0 %}
         <tr>
             <th>Replaces:</th>
-            <td class="wrap relatedto">{% include "packages/details_relatedto.html" %}</td>
+            <td class="wrap">{{ pkg.replaces|join(", ") }}</td>
         </tr>
-        {% endif %}{% endwith %}
-        {% with all_related=pkg.conflicts.all %}{% if all_related %}
+        {% endif %}
+        {% if pkg.replaces|length > 0 %}
         <tr>
             <th>Conflicts:</th>
-            <td class="wrap relatedto">{% include "packages/details_relatedto.html" %}</td>
+            <td class="wrap">{{ pkg.conflicts|join(", ") }}</td>
         </tr>
-        {% endif %}{% endwith %}
+        {% endif %}
         <tr>
-            <th>Maintainers:</th>
-            {% with maints=pkg.maintainers %}
-            <td>{% if maints %}{% for m in maints %}
-                <a href="/packages/?maintainer={{ m.username }}"
-                    title="View packages maintained by {{ m.get_full_name }}">{{ m.get_full_name }}</a><br/>
-                {% endfor %}{% else %}Orphan{% endif %}
-            </td>
-            {% endwith %}
-        </tr><tr>
             <th>Package Size:</th>
             <td>{{ pkg.compressed_size|filesizeformat }}</td>
         </tr><tr>
             <th>Installed Size:</th>
             <td>{{ pkg.installed_size|filesizeformat }}</td>
-        </tr><tr>
-            <th>Last Packager:</th>
-            <td>{% with pkgr=pkg.packager %}{% if pkgr %}
-            <a href="/packages/?packager={{ pkgr.username }}"
-                title="View packages packaged by {{ pkgr.get_full_name }}">{{ pkgr.get_full_name }}</a>
-            {% else %}{{ pkg.packager_str }}{% endif %}{% endwith %}</td>
         </tr><tr>
             <th>Build Date:</th>
             <td>{{ pkg.build_date }} UTC</td>
