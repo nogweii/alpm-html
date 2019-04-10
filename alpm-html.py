@@ -95,7 +95,7 @@ def main(argv):
   group.add_argument('-o', '--output', metavar = '<dir>', action = 'store',
                     dest = 'output', type = str, default = 'build',
                     help = 'Directory to put resulting HTML files')
-  group.add_argument('-n', '--name', action = 'store',
+  group.add_argument('-n', '--name', metavar = '<name>', action = 'store',
                     dest = 'repo_name', type = str, default = 'unofficial',
                     help = 'Repository name. Defaults to unofficial')
   group.add_argument('--css', metavar = '<file>', action = 'store',
@@ -107,7 +107,7 @@ def main(argv):
   group.add_argument('--key-id', metavar = '<ID>', action = 'store',
                     dest = 'key_id', type = str,
                     help = 'GPG key ID that has been used to sign this repository')
-  group.add_argument('--description', action = 'store',
+  group.add_argument('--description', metavar = '<text>', action = 'store',
                     dest = 'description', type = str,
                     help = 'The repository description')
   args = parser.parse_args(argv)
