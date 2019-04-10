@@ -145,3 +145,14 @@ table.results {
 #pkgdepslist .filesize {
     font-size: small;
 }
+
+#footer {
+ clear:both;
+ margin:2em 0 1em
+}
+
+#footer p {
+    margin: 0;
+    text-align: center;
+    font-size: .85em;
+}
