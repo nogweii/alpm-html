@@ -48,8 +48,8 @@ def final_name(pkg_filename):
   Appends '.html' as well."""
   return os.path.splitext(pkg_filename)[0][:-len(".pkg.tar")] + ".html"
 
-def package_template(package, outfile, repo):
-  te = Template(open('package.html.j2').read())
+def package_template(package, outfile, repo, template_file):
+  te = Template(open(template_file).read())
   with open(outfile, 'w') as f:
     f.write(te.render(pkg=package, repo_name=repo))
 
@@ -110,6 +110,9 @@ def main(argv):
   group.add_argument('--description', metavar = '<text>', action = 'store',
                     dest = 'description', type = str,
                     help = 'The repository description')
+  group.add_argument('--templates', metavar = '<dir>', action = 'store',
+                    dest = 'template_dir', type = str, default = '/usr/share/alpm-html',
+                    help = 'Where the templates should be retrieved from')
   args = parser.parse_args(argv)
   handle = config.init_with_config_and_options(args)
 
@@ -125,9 +128,9 @@ def main(argv):
       data = process_package(file)
       packages.append(data)
       output_file = os.path.join(args.output, data['html_path'])
-      package_template(data, outfile=output_file, repo=args.repo_name)
+      package_template(data, outfile=output_file, repo=args.repo_name, template_file=os.path.join(args.template_dir, 'package.html.j2'))
 
-  te = Template(open('index.html.j2').read())
+  te = Template(open(os.path.join(args.template_dir, 'index.html.j2')).read())
   with open(os.path.join(args.output, 'index.html'), 'w') as f:
     f.write(te.render(packages=packages, repo_name=args.repo_name, url=args.repo_url,
                       repo_desc=args.description, key_id=args.key_id))
