@@ -126,15 +126,6 @@ def main(argv):
         help="Repository name. Defaults to unofficial",
     )
     group.add_argument(
-        "--css",
-        metavar="<file>",
-        action="store",
-        dest="css",
-        type=str,
-        default="archrepo.css",
-        help="What CSS file to include in the build",
-    )
-    group.add_argument(
         "--url",
         metavar="<url>",
         action="store",
@@ -159,13 +150,13 @@ def main(argv):
         help="The repository description",
     )
     group.add_argument(
-        "--templates",
+        "--resources",
         metavar="<dir>",
         action="store",
-        dest="template_dir",
+        dest="res_dir",
         type=str,
         default="/usr/share/alpm-html",
-        help="Where the templates should be retrieved from",
+        help="Where additional resources (templates, CSS) are in the system",
     )
     args = parser.parse_args(argv)
 
@@ -186,10 +177,10 @@ def main(argv):
                 data,
                 outfile=output_file,
                 repo=args.repo_name,
-                template_file=os.path.join(args.template_dir, "package.html.j2"),
+                template_file=os.path.join(args.res_dir, "package.html.j2"),
             )
 
-    te = Template(open(os.path.join(args.template_dir, "index.html.j2")).read())
+    te = Template(open(os.path.join(args.res_dir, "index.html.j2")).read())
     with open(os.path.join(args.output, "index.html"), "w") as f:
         f.write(
             te.render(
@@ -201,7 +192,7 @@ def main(argv):
             )
         )
 
-    shutil.copyfile(args.css, os.path.join(args.output, "archrepo.css"))
+    shutil.copyfile(os.path.join(args.res_dir, "archrepo.css"), os.path.join(args.output, "archrepo.css"))
     return retcode
 
 
