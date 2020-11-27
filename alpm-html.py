@@ -12,6 +12,9 @@ import pyalpm
 from jinja2 import Template
 from pycman import config, pkginfo
 
+__program__ = "alpm-html"
+__version__ = "0.8.0"
+
 # The alpm database handle
 handle = None
 
@@ -93,7 +96,8 @@ def process_package(absolute_path):
 def main(argv):
     global handle
     retcode = 0
-    parser = config.make_parser(prog="alpm-html")
+    parser = config.make_parser(prog=__program__)
+    parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}')
     group = parser.add_argument_group("Generator options")
     group.add_argument(
         "-d",
@@ -155,7 +159,7 @@ def main(argv):
         action="store",
         dest="res_dir",
         type=str,
-        default="/usr/share/alpm-html",
+        default=f"/usr/share/{__program__}",
         help="Where additional resources (templates, CSS) are in the system",
     )
     args = parser.parse_args(argv)
