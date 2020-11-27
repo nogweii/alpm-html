@@ -118,7 +118,7 @@ def main(argv):
   pkg_dir_list = os.listdir(args.pkg_dir)
   pkg_dir_list.sort()
   for filename in pkg_dir_list:
-    if '.pkg.tar.' in filename:
+    if '.pkg.tar.' in filename and not filename.endswith('.sig'):
       file = os.path.join(args.pkg_dir, filename)
       if args.verbose:
         print(file)
