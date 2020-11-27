@@ -96,7 +96,7 @@ def process_package(absolute_path):
 def main(argv):
     global handle
     retcode = 0
-    parser = config.make_parser(prog=__program__)
+    parser = config.make_parser(prog=__program__, description="Generate a static site for browsing an Arch repo, styled like the main website.")
     parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}')
     group = parser.add_argument_group("Generator options")
     group.add_argument(
