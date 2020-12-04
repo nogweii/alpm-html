@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - PKGBUILD for AUR
 
+### Changed
+- index template includes a link for the GPG key ID, if it was mentioned
+
 ## [0.9.0] - 2020-12-03
 ### Added
 - Licensed under the GPLv3

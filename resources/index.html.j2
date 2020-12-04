@@ -8,6 +8,9 @@
       <p>{{ repo_desc }}</p>
       <pre>[{{ repo_name }}]
 Server = {{ url }}</pre>
+      {% if key_id %}
+      <p>This respository is signed with PGP key <a href="https://keys.openpgp.org/search?q={{ key_id }}">{{ key_id }}</a>.</p>
+      {% endif %}
     </div>
     <!---
 
