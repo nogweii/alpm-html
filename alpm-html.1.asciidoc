@@ -1,0 +1,85 @@
+ALPM-HTML(1)
+============
+:doctype: manpage
+
+NAME
+----
+alpm-html - Generate a static site for browsing an Arch Linux package
+repository, styled like the main website.
+
+SYNOPSIS
+--------
+*alpm-html* ['OPTIONS']
+
+
+DESCRIPTION
+-----------
+
+Running *alpm-html* will scan a directory for all tarballs, expecting them to
+be a package or database. Each package will have an HTML file generated that
+shows the package's metadata and file list. An index page showing a table of
+every package in the repository (including multiple versions if present) and
+instructions is also generated.
+
+OPTIONS
+-------
+
+*-d* '<dir>', *--pkg-dir* '<dir>'::
+    Directory where the repository packages are located in.
+    Defaults to current directory.
+
+*-o* '<dir>', *--output* '<dir>'::
+    Where to place the generated HTML files. Will clobber without warning.
+    Defaults to current directory.
+
+*-n* '<name>', *--name* '<name>'::
+    The name of this repository. Only used for the instructions.
+    Defaults to "unofficial".
+
+*--url* '<url>'::
+    What URL people should include their pacman configuration. Used for
+    instructions.
+
+*--key-id* '<ID>'::
+    If your repository is signed, this is the ID of the GPG key used for
+    signing. Used for instructions.
+
+*--description* '<text>'::
+    Free form text included in the index page to describe your repository.
+
+*--resources* '<dir>'::
+    Where on the system the Jinja templates and CSS are stored.
+    Defaults to `/usr/share/alpm-html/`.
+
+
+FILES
+-----
+
+These files are included in the default installation, but can be overridden if
+you want to customize the results. 
+
+'archrepo.css'::
+    The CSS to style the HTML. Copied without modification to the output directory.
+
+'index.html.j2'::
+    A Jinja template to generate the index page. Passed a few variables:
+     - `packages`, the list of packages in this repository
+     - `repo_name`, the name of the repository
+     - `url`, the URL of this repository
+     - `repo_desc`, the description of the repository
+     - `key_id`, the GPG key ID if passed in
+
+'package.html.j2'::
+    A Jinja template to generate each package details page. Passed a few variables:
+     - `pkg`, this package
+     - `repo_name`, the name of the repository
+
+BUGS
+----
+
+Send me an email at 'bugs@aether.earth', I'll try to respond quickly.
+
+SEE ALSO
+--------
+
+pacman(8), pyalpm and libalpm(3)
