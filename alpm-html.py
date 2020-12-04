@@ -17,7 +17,7 @@ from jinja2 import Template
 from pycman import config, pkginfo
 
 __program__ = "alpm-html"
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 
 # The alpm database handle
 handle = None
