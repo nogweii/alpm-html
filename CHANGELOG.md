@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - index template includes a link for the GPG key ID, if it was mentioned
 
+### Fixed
+- Copyright symbol in footer renders correctly now that the document declares
+  UTF-8 charset.
+
 ## [0.9.0] - 2020-12-03
 ### Added
 - Licensed under the GPLv3
