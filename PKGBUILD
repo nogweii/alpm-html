@@ -19,12 +19,8 @@ build() {
 package() {
     cd "${srcdir}/$pkgname-v$pkgver"
 
-    mkdir -p "${pkgdir}/usr/share/${pkgname}"
-    cp resources/* -t "${pkgdir}/usr/share/${pkgname}"
-
-    mkdir -p "${pkgdir}/usr/bin"
-    cp alpm-html.py "${pkgdir}/usr/bin/alpm-html"
-
-    mkdir -p "${pkgdir}/usr/share/doc/${pkgname}"
-    cp CHANGELOG.md "${pkgdir}/usr/share/doc/${pkgname}"
+    install -D -m 0644 resources/* -t "${pkgdir}/usr/share/${pkgname}"
+    install -D -m 0755 alpm-html.py "${pkgdir}/usr/bin/alpm-html"
+    install -D -m 0644 CHANGELOG.md "${pkgdir}/usr/share/doc/${pkgname}"
+    install -D -m 0644 -t "${pkgdir}/usr/share/man/man1/" alpm-html.1
 }
