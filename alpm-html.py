@@ -175,7 +175,8 @@ def main(argv):
     os.makedirs(args.output, mode=0o755, exist_ok=True)
 
     packages = []
-    pkg_dir_list = os.listdir(args.pkg_dir).sort()
+    pkg_dir_list = os.listdir(args.pkg_dir)
+    pkg_dir_list.sort()
     for filename in pkg_dir_list:
         if ".pkg.tar." in filename and not filename.endswith(".sig"):
             file = os.path.join(args.pkg_dir, filename)
