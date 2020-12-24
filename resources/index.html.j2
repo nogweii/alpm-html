@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head>
+<html lang="en"><head>
     <meta charset="utf-8" />
     <title>{{ repo_name }} repository overview</title>
     <link rel="stylesheet" type="text/css" href="archrepo.css" />
@@ -9,10 +9,10 @@
       <pre>[{{ repo_name }}]
 Server = {{ url }}</pre>
       {% if key_id %}
-      <p>This respository is signed with PGP key <a href="https://keys.openpgp.org/search?q={{ key_id }}">{{ key_id }}</a>.</p>
+      <p>This repository is signed with PGP key <a href="https://keys.openpgp.org/search?q={{ key_id }}">{{ key_id }}</a>.</p>
       {% endif %}
     </div>
-    <!---
+    <!--
 
 ==== {{ repo_name }} ====
 
@@ -26,7 +26,7 @@ Server = {{ url }}</pre>
 Server = {{ url }}
 {% raw %}</nowiki>}}{% endraw %}
 
-    --->
+    -->
 
     <div class="box">
       <p>{{ packages|length }} packages in this repository.</p>

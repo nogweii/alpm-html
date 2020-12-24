@@ -3,14 +3,18 @@ body {
     font-family: sans-serif;
     border-top: 5px #08c solid !important;
 }
+
 .box {
-  padding: 0.65em;
-  background: #ecf2f5;
-  border: 1px solid #bcd;
-  margin-bottom: 2em;
+    padding: 0.65em;
+    background: #ecf2f5;
+    border: 1px solid #bcd;
+    margin-bottom: 2em;
 }
 
-a { color: #07b; text-decoration: none; }
+a {
+    color: #07b;
+    text-decoration: none;
+}
 
 pre {
     background-color: #dfd;
@@ -29,68 +33,68 @@ table {
     border-collapse: collapse;
 }
 
-    table .wrap {
-        white-space: normal;
-    }
+table .wrap {
+    white-space: normal;
+}
 
-th,
-td {
+th, td {
     white-space: nowrap;
     text-align: left;
 }
 
-    th {
-        vertical-align: middle;
-        font-weight: bold;
-    }
+th {
+    vertical-align: middle;
+    font-weight: bold;
+}
 
-    td {
-        vertical-align: top;
-    }
+td {
+    vertical-align: top;
+}
 
 table.results {
     font-size: 0.846em;
     border-top: 1px dotted #999;
     border-bottom: 1px dotted #999;
-
     width: 100%;
 }
 
-    table.results tbody tr:nth-child(odd) {
-        background-color: #e4eeff;
-    }
-    table.results tbody tr:nth-child(even) {
-        background-color: #fff;
-    }
-    .results th {
-        padding: 0.5em 1em 0.25em 0.25em;
-        border-bottom: 1px solid #999;
-        white-space: nowrap;
-        background-color:#fff;
-        text-align: left;
-        vertical-align: middle;
-        font-weight: bold;
-    }
+table.results tbody tr:nth-child(odd) {
+    background-color: #e4eeff;
+}
 
-    .results td {
-        padding: .3em 1em .3em 3px;
-    }
+table.results tbody tr:nth-child(even) {
+    background-color: #fff;
+}
 
-    .results tr.odd {
-        background: #fff;
-    }
+.results th {
+    padding: 0.5em 1em 0.25em 0.25em;
+    border-bottom: 1px solid #999;
+    white-space: nowrap;
+    background-color: #fff;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: bold;
+}
 
-    .results tr.even {
-        background: #e4eeff;
-    }
+.results td {
+    padding: .3em 1em .3em 3px;
+}
 
-    .results .flagged {
-        color: red;
-    }
+.results tr.odd {
+    background: #fff;
+}
 
-    .results tr.empty td {
-        text-align: center;
-    }
+.results tr.even {
+    background: #e4eeff;
+}
+
+.results .flagged {
+    color: red;
+}
+
+.results tr.empty td {
+    text-align: center;
+}
 
 #metadata {
     display: grid;
@@ -98,8 +102,8 @@ table.results {
     grid-gap: 1em;
     grid-auto-rows: min-content;
     grid-template-areas: 
-      "a b"
-      "c b";
+    "a b"
+    "c b";
     align-items: start;
 }
 
@@ -128,9 +132,11 @@ table.results {
 #pkgdeps {
     grid-area: a;
 }
+
 #pkgoptdeps {
     grid-area: c;
 }
+
 #pkgfiles {
     grid-area: b;
 }
@@ -139,20 +145,21 @@ table.results {
     color: #666;
 }
 
-#pkgfilelist li.f {
-}
-
-#pkgdepslist .filesize {
+.pkgdepslist .filesize {
     font-size: small;
 }
 
 #footer {
- clear:both;
- margin:2em 0 1em
+    clear: both;
+    margin: 2em 0 1em
 }
 
 #footer p {
     margin: 0;
     text-align: center;
     font-size: .85em;
+}
+
+div[itemscope] {
+    display: none;
 }

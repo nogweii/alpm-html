@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head>
+<html lang="en"><head>
     <meta charset="utf-8" />
     <title>{{ repo_name }} repo - {{ pkg.name }} details</title>
     <link rel="stylesheet" type="text/css" href="archrepo.css" />
@@ -8,16 +8,21 @@
 <div id="pkgdetails" class="box">
     <h2><a href="{{ pkg.filename }}">{{ pkg.name }}</a> {{ pkg.version }}</h2>
 
-    <div itemscope itemtype="http://schema.org/SoftwareApplication">
-    <meta itemprop="name" content="{{ pkg.name }}"/>
-    <meta itemprop="version" content="{{ pkg.version }}"/>
-    <meta itemprop="softwareVersion" content="{{ pkg.version }}"/>
-    <meta itemprop="fileSize" content="{{ pkg.compressed_size }}"/>
-    <meta itemprop="dateCreated" content="{{ pkg.build_date }}"/>
-    <meta itemprop="operatingSystem" content="Arch Linux"/>
-    {% if pkg.packager %}<div style="display:none" itemprop="provider" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="{{ pkg.packager }}"/>
-    </div>{% endif %}
+    <!-- schema.org structured data -->
+    <div itemscope itemtype="https://schema.org/SoftwareApplication">
+        <meta itemprop="name" content="{{ pkg.name }}"/>
+        <meta itemprop="version" content="{{ pkg.version }}"/>
+        <meta itemprop="softwareVersion" content="{{ pkg.version }}"/>
+        <meta itemprop="fileSize" content="{{ pkg.compressed_size }}"/>
+        <meta itemprop="dateCreated" content="{{ pkg.build_date }}"/>
+        <meta itemprop="operatingSystem" content="Arch Linux"/>
+        {% if pkg.packager %}
+        <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
+            <meta itemprop="name" content="{{ pkg.packager }}"/>
+        </div>
+        {% endif %}
+    </div>
+
     <table id="pkginfo">
         <tr>
             <th>Architecture:</th>
@@ -70,13 +75,12 @@
             <td>{{ pkg.build_date }} UTC</td>
         </tr>
     </table>
-    </div>
 
     <div id="metadata">
         <div id="pkgdeps" class="listing">
             <h3 title="{{ pkg.name }} has the following dependencies">
                 Dependencies ({{pkg.depends|length}})</h3>
-            {% if pkg.depends|length > 0 %}<ul id="pkgdepslist">
+            {% if pkg.depends|length > 0 %}<ul class="pkgdepslist">
                 {% for depend in pkg.depends %}<li>{{ depend }}</li>{% endfor %}
             </ul>{% endif %}
         </div>
@@ -84,7 +88,7 @@
         <div id="pkgoptdeps" class="listing">
             <h3 title="{{ pkg.name }} has the following optional dependencies">
                 Optional Dependencies ({{pkg.optdepends|length}})</h3>
-            <ul id="pkgdepslist">
+            <ul class="pkgdepslist">
                 {% for depend in pkg.optdepends %}<li>{{ depend.name }} - <i>{{ depend.description }}</i></li>{% endfor %}
             </ul>
         </div>
@@ -94,7 +98,7 @@
                 Package Contents</h3>
             <div id="pkgfilelist">
                 <p class='counts'>Package has {{ pkg.files.file_count }} files and {{ pkg.files.dir_count }} directories.</p>
-                <ul id="pkgdepslist">
+                <ul class="pkgdepslist">
                 {% for file in pkg.files.files %}<li class="{% if file.name.endswith('/') %}d{% else %}f{% endif %}">{{ file.name }} {%if file.bytes > 0 %}<span class='filesize'>({{file.bytes|filesizeformat}})</span>{% endif %}</li>{% endfor %}
                 </ul>
             </div>
