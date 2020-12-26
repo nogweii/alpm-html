@@ -6,75 +6,78 @@
 </head><body>
 
 <div id="pkgdetails" class="box">
-    <h2><a href="{{ pkg.filename }}">{{ pkg.name }}</a> {{ pkg.version }}</h2>
-
-    <!-- schema.org structured data -->
     <div itemscope itemtype="https://schema.org/SoftwareApplication">
-        <meta itemprop="name" content="{{ pkg.name }}"/>
-        <meta itemprop="version" content="{{ pkg.version }}"/>
-        <meta itemprop="softwareVersion" content="{{ pkg.version }}"/>
-        <meta itemprop="fileSize" content="{{ pkg.compressed_size }}"/>
-        <meta itemprop="dateCreated" content="{{ pkg.build_date }}"/>
-        <meta itemprop="operatingSystem" content="Arch Linux"/>
+        <h2>
+            <a href="{{ pkg.filename }}"><span itemprop="name">{{ pkg.name }}</span></a>
+            <span itemprop="version">{{ pkg.version }}</span>
+        </h2>
+
+        <meta itemprop="softwareVersion" content="{{ pkg.version }}" />
+        <meta itemprop="operatingSystem" content="Arch Linux" />
         {% if pkg.packager %}
         <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="name" content="{{ pkg.packager }}"/>
+            <meta itemprop="name" content="{{ pkg.packager }}" />
         </div>
         {% endif %}
-    </div>
+        {% if pkg.groups|length == 0 %}
+        <meta itemprop="applicationCategory" content="Software" />
+        {% endif %}
 
-    <table id="pkginfo">
-        <tr>
-            <th>Architecture:</th>
-            <td>{{pkg.architecture}}</td>
-        </tr>
-        <tr>
-            <th>Description:</th>
-            <td class="wrap" itemprop="description">{{ pkg.description|default("") }}</td>
-        </tr><tr>
-            <th>Upstream URL:</th>
-            <td>{% if pkg.url %}<a itemprop="url" href="{{ pkg.url }}"
-                    title="Visit the website for {{ pkg.name }}">{{ pkg.url }}</a>{% endif %}</td>
-        </tr><tr>
-            <th>License(s):</th>
-            <td class="wrap">{{ pkg.licenses|join(", ") }}</td>
-        </tr>
-        {% if pkg.groups|length > 0 %}
-        <tr>
-            <th>Groups:</th>
-            <td class="wrap">{{ pkg.groups|join(", ") }}</td>
-            </td>
-        </tr>
-        {% endif %}
-        {% if pkg.provides|length > 0 %}
-        <tr>
-            <th>Provides:</th>
-            <td class="wrap">{{ pkg.provides|join(", ") }}</td>
-        </tr>
-        {% endif %}
-        {% if pkg.replaces|length > 0 %}
-        <tr>
-            <th>Replaces:</th>
-            <td class="wrap">{{ pkg.replaces|join(", ") }}</td>
-        </tr>
-        {% endif %}
-        {% if pkg.replaces|length > 0 %}
-        <tr>
-            <th>Conflicts:</th>
-            <td class="wrap">{{ pkg.conflicts|join(", ") }}</td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>Package Size:</th>
-            <td>{{ pkg.compressed_size|filesizeformat }}</td>
-        </tr><tr>
-            <th>Installed Size:</th>
-            <td>{{ pkg.installed_size|filesizeformat }}</td>
-        </tr><tr>
-            <th>Build Date:</th>
-            <td>{{ pkg.build_date }} UTC</td>
-        </tr>
-    </table>
+        <table id="pkginfo">
+            <tr>
+                <th>Architecture:</th>
+                <td>{{ pkg.architecture }}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td class="wrap" itemprop="description">{{ pkg.description|default("") }}</td>
+            </tr>
+            <tr>
+                <th>Upstream URL:</th>
+                <td>{% if pkg.url %}<a itemprop="url" href="{{ pkg.url }}" title="Visit the website for {{ pkg.name }}">{{ pkg.url }}</a>{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ strings.licenses }}:</th>
+                <td class="wrap">{{ pkg.licenses|join(", ") }}</td>
+            </tr>
+            {% if pkg.groups|length > 0 %}
+            <tr>
+                <th>{{ strings.groups }}:</th>
+                <td class="wrap" itemprop="applicationCategory">{{ pkg.groups|join(", ") }}</td>
+            </tr>
+            {% endif %}
+            {% if pkg.provides|length > 0 %}
+            <tr>
+                <th>Provides:</th>
+                <td class="wrap">{{ pkg.provides|join(", ") }}</td>
+            </tr>
+            {% endif %}
+            {% if pkg.replaces|length > 0 %}
+            <tr>
+                <th>Replaces:</th>
+                <td class="wrap">{{ pkg.replaces|join(", ") }}</td>
+            </tr>
+            {% endif %}
+            {% if pkg.replaces|length > 0 %}
+            <tr>
+                <th>Conflicts:</th>
+                <td class="wrap">{{ pkg.conflicts|join(", ") }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Package Size:</th>
+                <td itemprop="fileSize">{{ pkg.compressed_size|filesizeformat }}</td>
+            </tr>
+            <tr>
+                <th>Installed Size:</th>
+                <td>{{ pkg.installed_size|filesizeformat }}</td>
+            </tr>
+            <tr>
+                <th>Build Date:</th>
+                <td itemprop="dateCreated" >{{ pkg.build_date }} UTC</td>
+            </tr>
+        </table>
+    </div>
 
     <div id="metadata">
         <div id="pkgdeps" class="listing">

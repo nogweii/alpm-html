@@ -15,12 +15,14 @@ import sys
 import pyalpm
 from jinja2 import Template
 from pycman import config, pkginfo
+import inflect
 
 __program__ = "alpm-html"
 __version__ = "0.9.2"
 
 # The alpm database handle
 handle = None
+inflection = inflect.engine()
 
 
 def optdepends_parse(dlist):
@@ -59,7 +61,7 @@ def final_name(pkg_filename):
 def package_template(package, outfile, repo, template_file):
     te = Template(open(template_file).read())
     with open(outfile, "w") as f:
-        f.write(te.render(pkg=package, repo_name=repo))
+        f.write(te.render(pkg=package, repo_name=repo, strings=label_strings(package)))
 
 
 def pkg_to_dict(package, absolute_path):
@@ -90,6 +92,11 @@ def pkg_to_dict(package, absolute_path):
         "filename": os.path.basename(absolute_path),
     }
 
+def label_strings(package):
+    return {
+        "licenses": inflection.plural("License", len(package['licenses'])),
+        "groups": inflection.plural("Group", len(package['groups']))
+    }
 
 def process_package(absolute_path):
     global handle
