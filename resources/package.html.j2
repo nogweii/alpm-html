@@ -1,13 +1,16 @@
 <!doctype html>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="utf-8" />
     <title>{{ repo_name }} repo - {{ pkg.name }} details</title>
     <link rel="stylesheet" type="text/css" href="archrepo.css" />
-</head><body>
+</head>
+<body>
 
 <div id="pkgdetails" class="box">
     <div itemscope itemtype="https://schema.org/SoftwareApplication">
         <h2>
+            [<a href="index.html">{{ pkg.repo_name }}</a>] /
             <a href="{{ pkg.filename }}"><span itemprop="name">{{ pkg.name }}</span></a>
             <span itemprop="version">{{ pkg.version }}</span>
         </h2>
@@ -80,31 +83,50 @@
     </div>
 
     <div id="metadata">
+        {# the list of dependencies is always shown, even if there are 0 #}
         <div id="pkgdeps" class="listing">
-            <h3 title="{{ pkg.name }} has the following dependencies">
-                Dependencies ({{pkg.depends|length}})</h3>
-            {% if pkg.depends|length > 0 %}<ul class="pkgdepslist">
-                {% for depend in pkg.depends %}<li>{{ depend }}</li>{% endfor %}
-            </ul>{% endif %}
+            <h3 title="{{ pkg.name }} has the following dependencies">Dependencies ({{pkg.depends|length}})</h3>
+            {% if pkg.depends|length > 0 %}
+            <ul class="pkgdepslist">
+                {% for depend in pkg.depends %}
+                <li>
+                    {% if depend.link %}
+                    <a href="{{ depend.link }}">{{ depend.name }}</a>
+                    {% else %}
+                    {{ depend.name }}
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
+
         {% if pkg.optdepends|length > 0 %}
         <div id="pkgoptdeps" class="listing">
-            <h3 title="{{ pkg.name }} has the following optional dependencies">
-                Optional Dependencies ({{pkg.optdepends|length}})</h3>
+            <h3 title="{{ pkg.name }} has the following optional dependencies">Optional Dependencies ({{pkg.optdepends|length}})</h3>
             <ul class="pkgdepslist">
-                {% for depend in pkg.optdepends %}<li>{{ depend.name }} - <i>{{ depend.description }}</i></li>{% endfor %}
+                {% for depend in pkg.optdepends %}
+                <li>
+                    {% if depend.link %}
+                    <a href="{{ depend.link }}">{{ depend.name }}</a>
+                    {% else %}
+                    {{ depend.name }}
+                    {% endif %}
+                    - <i>{{ depend.description }}</i>
+                </li>
+                {% endfor %}
             </ul>
         </div>
         {% endif %}
+
         <div id="pkgfiles" class="listing">
-            <h3 title="Complete list of files contained within this package">
-                Package Contents</h3>
-            <div id="pkgfilelist">
-                <p class='counts'>Package has {{ pkg.files.file_count }} files and {{ pkg.files.dir_count }} directories.</p>
-                <ul class="pkgdepslist">
+            <h3 title="Complete list of files contained within this package">Package Contents</h3>
+            <p class='counts'>Package has {{ pkg.files.file_count }} files and {{ pkg.files.dir_count }} directories.</p>
+            {% if pkg.files.files|length > 0 %}
+            <ul class="pkgdepslist">
                 {% for file in pkg.files.files %}<li class="{% if file.name.endswith('/') %}d{% else %}f{% endif %}">{{ file.name }} {%if file.bytes > 0 %}<span class='filesize'>({{file.bytes|filesizeformat}})</span>{% endif %}</li>{% endfor %}
-                </ul>
-            </div>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -116,4 +138,5 @@
 
     <p>The registered trademark Linux&copy; is used pursuant to a sublicense from LMI, the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.</p>
 </div>
-</body></html>
+</body>
+</html>

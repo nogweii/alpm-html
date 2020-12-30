@@ -51,6 +51,11 @@ OPTIONS
     Where on the system the Jinja templates and CSS are stored.
     Defaults to `/usr/share/alpm-html/`.
 
+*--html-min*::
+    Minify the HTML generated from the templates by removing extraneous whitespace.
+    Requires the 'python-htmlmin' library to be installed.
+    Defaults to false.
+
 
 FILES
 -----
@@ -73,6 +78,7 @@ you want to customize the results.
     A Jinja template to generate each package details page. Passed a few variables:
      - `pkg`, this package
      - `repo_name`, the name of the repository
+     - `strings`, a few labels with pluralization already applied
 
 BUGS
 ----
