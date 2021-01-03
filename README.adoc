@@ -1,1 +1,0 @@
-alpm-html.1.asciidoc
